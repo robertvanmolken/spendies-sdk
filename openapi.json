@@ -1,0 +1,1468 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spendies Backend API",
+    "version": "1.0",
+    "description": "This RESTful API is for accessing the back-end functionality of Spendies,  such as registering and verifying accounts, and creating and retrieving wallets, payment requests, and performing payment fullfilments.",
+    "termsOfService": "http://spendies.app/terms/",
+    "contact": {
+      "email": "connect@spendies.app",
+      "name": "Spendies API Team",
+      "url": "http://spendies.app"
+    },
+    "license": {
+      "name": "Licence usage - Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "Account Management",
+      "description": "Resources in this group are related to account management."
+    },
+    {
+      "name": "Wallet Management",
+      "description": "Resources in this group are related to wallet management."
+    },
+    {
+      "name": "Payment Management",
+      "description": "Resources in this group are related to payment management."
+    }
+  ],
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "SwaggerHub API Auto Mocking",
+      "url": "https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0"
+    }
+  ],
+  "paths": {
+    "/accounts": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides registration capability for creating a new user account.",
+        "description": "Register a new account to access the front-end application and create new payment requests.",
+        "operationId": "create-account",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateAccountRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateAccountResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/accounts/verify": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides KYC capability for existing accounts for verifying email and phone number.",
+        "description": "To allow other people to pay a user back in FIAT currency we need to  perform a KYC enquiry. This operation sends a verification code to given email address or phone number to authorize this capability.",
+        "operationId": "verify-account",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/VerifyAccountRequest"
+        },
+        "responses": {
+          "204": {
+            "description": "Verification code send"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides KYC capability for storing account email and phone number.",
+        "description": "After sending a verification code to the given email or phone number the  user needs to complete the process by calling this operation with the  received verification code.",
+        "operationId": "validate-account",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/VerifyCodeParam"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ResourceLocationResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/accounts/me": {
+      "get": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides retrieval capability for returning the account information of logged in user.",
+        "description": "Retrieve the account information of the user that is logged in.",
+        "operationId": "retrieve-account",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrieveAccountResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides registration capability for updating the account information of logged in user.",
+        "description": "Store the new account information of the user that is logged in.",
+        "operationId": "update-account",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateAccountRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrieveAccountResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/magiclink": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides authentication capability for returning accounts by creating a new magic link.",
+        "description": "Submit request for receiving new magic authentication link based on given device/account information to get access to the application.",
+        "operationId": "request-magiclink",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/MagicLinkRequest"
+        },
+        "responses": {
+          "204": {
+            "description": "Magic link send"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/magiclink/callback": {
+      "get": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides autorization capability for returning accounts by creating a new auth token.",
+        "description": "Create/retrieve a new API authorization token based on given magic link  details to give user account access to the application.",
+        "operationId": "verify-magiclink",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/MagicLinkParam"
+          },
+          {
+            "$ref": "#/components/parameters/SignatureParam"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/AuthenticateResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/wallets": {
+      "get": {
+        "tags": [
+          "Wallet Management"
+        ],
+        "summary": "Provides retrieval capability for returning wallets beloning to the authenticated account.",
+        "description": "Retrieve a list of wallets that belong to the current account based on  the value of the authorization cookie.",
+        "operationId": "retrieve-wallets",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrieveWalletsResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Wallet Management"
+        ],
+        "summary": "Provides registration capability for creating new wallets for the authenticated account.",
+        "description": "Register a new wallet which can be used in setting up payments or use  in outstanding payments.",
+        "operationId": "create-wallet",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateWalletRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateWalletResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/wallets/{walletId}": {
+      "get": {
+        "tags": [
+          "Wallet Management"
+        ],
+        "summary": "Provides retrieval capability for returning wallet details.",
+        "description": "Retrieve a list of wallets that belong to the current account based on  the value of the authorization cookie.",
+        "operationId": "get-wallet",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "walletId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/WalletId"
+            },
+            "description": "The wallet ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrieveWalletResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Wallet Management"
+        ],
+        "summary": "Provides removal capability for deleting a wallet for the authenticated account.",
+        "description": "Remove a wallet for the authenticated account so it can no longer be  used when creating new payments.",
+        "operationId": "remove-wallet",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "walletId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/WalletId"
+            },
+            "description": "Id of the wallet"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful wallet removal"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/payments": {
+      "get": {
+        "tags": [
+          "Payment Management"
+        ],
+        "summary": "Provides retrieval capability for returning payment requests beloning to the authenticated account.",
+        "description": "Retrieve the details of a payment request in order to fulfill the amount of crypto currency.",
+        "operationId": "get-payments",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limit the amount of results"
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Starting point of returned results"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrievePaymentsResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Payment Management"
+        ],
+        "summary": "Provides registration capability for creating new payments by the authenticated account.",
+        "description": "Register a new payment request that can be send by a shareble link to  (non) users of cryptag.",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "create-payment",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreatePaymentResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "requestBody": {
+          "description": "New payment request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Payment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{paymentId}": {
+      "get": {
+        "tags": [
+          "Payment Management"
+        ],
+        "summary": "Provides retrieval capability for returning payment request details.",
+        "description": "Retrieve the details of a payment request in order to fulfill the amount of crypto currency.",
+        "operationId": "get-payment",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "paymentId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PaymentId"
+            },
+            "description": "The payment request ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RetrievePaymentResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Payment Management"
+        ],
+        "summary": "Provides removal capability for deleting a payment request for the authenticated account.",
+        "description": "Remove a payment request for the authenticated account so it can no  longer be viewed and shared.",
+        "operationId": "remove-payment",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "paymentId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PaymentId"
+            },
+            "description": "The payment request ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful wallet removal"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "integer",
+                "description": "The status code as a number"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the error as a \"bumpy case\", i.e. NotFound or  InternalServerError."
+              },
+              "message": {
+                "type": "string",
+                "description": "The traditional error message, which should be kept short and  all single line"
+              },
+              "code": {
+                "type": "string",
+                "description": "The application error code"
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "The application error details"
+              }
+            },
+            "required": [
+              "statusCode",
+              "name"
+            ]
+          }
+        }
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "format": "byte",
+            "description": "Account signature",
+            "example": "eyAiZGV2aWNlSWQiOiAiMmI2ZjBjYzkwNGQxMzdiZTJlMTczMDIzNWY1NjY0MDk0YjgzMTE4NiIgfQ=="
+          },
+          "name": {
+            "type": "string",
+            "description": "Given name of account",
+            "example": "Jasper"
+          }
+        },
+        "required": [
+          "signature",
+          "name"
+        ]
+      },
+      "AccountCreate": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "wallet": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "required": [
+          "account"
+        ]
+      },
+      "AccountResult": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "$ref": "#/components/schemas/AuthToken"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "AccountUpdate": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "format": "byte",
+            "description": "Account signature",
+            "example": "eyAiZGV2aWNlSWQiOiAiMmI2ZjBjYzkwNGQxMzdiZTJlMTczMDIzNWY1NjY0MDk0YjgzMTE4NiIgfQ=="
+          },
+          "name": {
+            "type": "string",
+            "description": "Given name of account",
+            "example": "Jasper"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of account",
+            "example": "jasper@example.com"
+          }
+        },
+        "required": [
+          "signature"
+        ]
+      },
+      "AccountKYC": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of account",
+            "example": "jasper@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+            "description": "Phone number of account",
+            "example": "+31 610 111 213"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "AccountInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of account",
+            "example": "Jasper"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of account",
+            "example": "jasper@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+            "description": "Phone number of account",
+            "example": "+31 610 111 213"
+          },
+          "authLevel": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Authorisation level of account",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "wallets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WalletWithId"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "authLevel"
+        ]
+      },
+      "TokenPayload": {
+        "type": "object",
+        "properties": {
+          "iss": {
+            "type": "string",
+            "description": "Name of service provider",
+            "example": "Cryptag"
+          },
+          "sub": {
+            "type": "string",
+            "description": "Subscription (account id)",
+            "example": "2ddbddabb77e79d10da7e291a515ed29f2ecc97b"
+          },
+          "dev": {
+            "type": "string",
+            "description": "Unique id of device",
+            "example": "2644b25202d2561d6194078a6b50d339"
+          },
+          "exp": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Expire after time",
+            "example": 1573147302
+          },
+          "iat": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Issued at time",
+            "example": 1557418902
+          }
+        },
+        "required": [
+          "iss",
+          "sub",
+          "dev",
+          "exp"
+        ]
+      },
+      "Signature": {
+        "type": "object",
+        "properties": {
+          "uniqueId": {
+            "type": "string",
+            "description": "Unique id of device",
+            "example": "2644b25202d2561d6194078a6b50d339"
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "User agent of browser",
+            "example": "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143"
+          },
+          "ipAddress": {
+            "type": "string",
+            "format": "ipv4",
+            "description": "IP Address of device",
+            "example": "89.20.162.146"
+          }
+        },
+        "required": [
+          "uniqueId",
+          "userAgent",
+          "ipAddress"
+        ]
+      },
+      "TokenRequest": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "format": "byte",
+            "description": "Account signature",
+            "example": "eyAiZGV2aWNlSWQiOiAiMmI2ZjBjYzkwNGQxMzdiZTJlMTczMDIzNWY1NjY0MDk0YjgzMTE4NiIgfQ=="
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of account",
+            "example": "jasper@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+            "description": "Phone number of account",
+            "example": "+31 610 111 213"
+          }
+        },
+        "required": [
+          "signature"
+        ]
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Display name of wallet",
+            "example": "Ethereum"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of wallet",
+            "example": "0x026FE98b9Bc1Cc16ED443ee5350A397c6b2Ef040"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of wallet",
+            "example": "ETH"
+          }
+        },
+        "required": [
+          "name",
+          "address",
+          "currency"
+        ]
+      },
+      "WalletResult": {
+        "type": "object",
+        "properties": {
+          "walletId": {
+            "$ref": "#/components/schemas/WalletId"
+          }
+        },
+        "required": [
+          "walletId"
+        ]
+      },
+      "WalletWithId": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "walletId": {
+                "$ref": "#/components/schemas/WalletId"
+              }
+            },
+            "required": [
+              "walletId"
+            ]
+          },
+          {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        ]
+      },
+      "PaymentResult": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "$ref": "#/components/schemas/PaymentId"
+          }
+        },
+        "required": [
+          "paymentId"
+        ]
+      },
+      "PaymentWithId": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "paymentId": {
+                "$ref": "#/components/schemas/PaymentId"
+              }
+            },
+            "required": [
+              "paymentId"
+            ]
+          },
+          {
+            "$ref": "#/components/schemas/Payment"
+          }
+        ]
+      },
+      "OriginatorRecipient": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John",
+            "description": "Name of recipient"
+          },
+          "address": {
+            "type": "string",
+            "example": "0x026FE98b9Bc1Cc16ED443ee5350A397c6b2Ef040",
+            "description": "Wallet address of recipient"
+          },
+          "links": {
+            "$ref": "#/components/schemas/LinkedAccount"
+          }
+        },
+        "required": [
+          "address"
+        ]
+      },
+      "LinkedAccount": {
+        "type": "object",
+        "properties": {
+          "linkedAccount": {
+            "$ref": "#/components/schemas/AccountId"
+          },
+          "linkedWallet": {
+            "$ref": "#/components/schemas/WalletId"
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "receive",
+              "give"
+            ],
+            "example": "receive",
+            "description": "Type of transaction"
+          },
+          "dateInitiated": {
+            "type": "string",
+            "format": "date",
+            "example": "2019-01-31",
+            "description": "Initiated date of payment"
+          },
+          "reasonForPayment": {
+            "type": "string",
+            "example": "An awesome Crypto night",
+            "description": "Reason for payment request"
+          },
+          "targetCurrency": {
+            "type": "string",
+            "example": "ETH",
+            "description": "Target (crypto) currency to be paid in"
+          },
+          "targetAmount": {
+            "type": "number",
+            "format": "float",
+            "example": 0.09562086,
+            "description": "Target (crypto) amount to be paid"
+          },
+          "sourceCurrency": {
+            "type": "string",
+            "example": "EUR",
+            "description": "Source (fiat) currency used for conversion"
+          },
+          "sourceAmount": {
+            "type": "number",
+            "format": "double",
+            "example": 9.65,
+            "description": "Source (fiat) amount to be converted"
+          },
+          "expectedPayments": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "example": 1,
+            "description": "Amount of expected payments"
+          },
+          "Recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OriginatorRecipient"
+            },
+            "uniqueItems": true
+          },
+          "Originators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OriginatorRecipient"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "type",
+          "dateInitiated",
+          "reasonForPayment",
+          "targetCurrency",
+          "targetAmount",
+          "expectedPayments"
+        ]
+      },
+      "AccountId": {
+        "type": "string",
+        "description": "ID of Account",
+        "example": "795d9f2155bbbd3d7410"
+      },
+      "PaymentId": {
+        "type": "string",
+        "description": "ID of Payment",
+        "example": "96de0c5931d8ed12754a"
+      },
+      "WalletId": {
+        "type": "string",
+        "description": "ID of Wallet",
+        "example": "0548f80ad6ce34bed266"
+      },
+      "AuthToken": {
+        "type": "string",
+        "description": "Authorization token",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      }
+    },
+    "parameters": {
+      "MagicLinkParam": {
+        "name": "mlv",
+        "in": "query",
+        "description": "The magic link value (mlv) send to user via email or phone",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "SignatureParam": {
+        "name": "ct-signature",
+        "in": "header",
+        "description": "Account signature",
+        "required": true,
+        "schema": {
+          "format": "byte",
+          "type": "string"
+        },
+        "example": "eyAiZGV2aWNlSWQiOiAiMmI2ZjBjYzkwNGQxMzdiZTJlMTczMDIzNWY1NjY0MDk0YjgzMTE4NiIgfQ=="
+      },
+      "VerifyCodeParam": {
+        "name": "ct-verify-code",
+        "in": "header",
+        "description": "Verification code to validate account",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "pattern": "[\\d]{6}"
+        }
+      }
+    },
+    "requestBodies": {
+      "CreateAccountRequest": {
+        "description": "Create a new user account",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountCreate"
+            }
+          }
+        }
+      },
+      "UpdateAccountRequest": {
+        "description": "Update the account information of a user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountUpdate"
+            }
+          }
+        }
+      },
+      "VerifyAccountRequest": {
+        "description": "Verify a user account",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountKYC"
+            }
+          }
+        }
+      },
+      "MagicLinkRequest": {
+        "description": "Request Authentication Link",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenRequest"
+            }
+          }
+        }
+      },
+      "CreateWalletRequest": {
+        "description": "Create a new wallet for a user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Wallet"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequestError": {
+        "description": "Error: Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 400,
+              "name": "BadRequestError",
+              "message": "The request body is invalid"
+            }
+          }
+        }
+      },
+      "UnprocessableEntityError": {
+        "description": "Error: Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 422,
+              "name": "UnprocessableEntityError",
+              "message": "The request body is invalid",
+              "code": "VALIDATION_FAILED",
+              "details": {
+                "path": ".account",
+                "code": "required",
+                "message": "should have required property 'name'",
+                "info": null,
+                "missingProperty": "name"
+              }
+            }
+          }
+        }
+      },
+      "UnauthorizedError": {
+        "description": "Error: Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 401,
+              "name": "UnauthorizedError",
+              "message": "Missing or bad authentication"
+            }
+          }
+        }
+      },
+      "ForbiddenError": {
+        "description": "Error: Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 403,
+              "name": "ForbiddenError",
+              "message": "No permission to access this resource"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Error: Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 404,
+              "name": "NotFoundError",
+              "message": "Resource XXX not found"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Error: Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "statusCode": 500,
+              "name": "InternalServerError",
+              "message": "Not Implemented"
+            }
+          }
+        }
+      },
+      "AuthenticateResponse": {
+        "description": "Successful authentication",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountResult"
+            }
+          }
+        }
+      },
+      "CreateAccountResponse": {
+        "description": "Successful account creation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountResult"
+            }
+          }
+        }
+      },
+      "RetrieveAccountResponse": {
+        "description": "Users account information",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountInfo"
+            }
+          }
+        }
+      },
+      "CreateWalletResponse": {
+        "description": "Successful wallet creation",
+        "headers": {
+          "Location": {
+            "schema": {
+              "format": "uri",
+              "type": "string",
+              "example": "/wallets/0548f80ad6ce34bed266"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WalletResult"
+            }
+          }
+        },
+        "links": {
+          "GetWalletByWalletId": {
+            "$ref": "#/components/links/GetWalletByWalletId"
+          }
+        }
+      },
+      "RetrieveWalletResponse": {
+        "description": "Single wallet result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Wallet"
+            }
+          }
+        }
+      },
+      "RetrieveWalletsResponse": {
+        "description": "List of wallets result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/WalletWithId"
+              }
+            }
+          }
+        }
+      },
+      "CreatePaymentResponse": {
+        "description": "Successful payment creation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentResult"
+            }
+          }
+        },
+        "links": {
+          "GetPaymentByPaymentId": {
+            "$ref": "#/components/links/GetPaymentByPaymentId"
+          }
+        }
+      },
+      "ResourceLocationResponse": {
+        "description": "Successful updated",
+        "headers": {
+          "Location": {
+            "description": "The link to resource",
+            "schema": {
+              "format": "uri",
+              "type": "string",
+              "example": "/accounts/me"
+            }
+          }
+        }
+      },
+      "RetrievePaymentResponse": {
+        "description": "Single payment request result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Payment"
+            }
+          }
+        }
+      },
+      "RetrievePaymentsResponse": {
+        "description": "List of payment requests result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PaymentWithId"
+              }
+            }
+          }
+        }
+      }
+    },
+    "links": {
+      "GetWalletByWalletId": {
+        "description": "The `walletId` value returned in the response can be used as the `walletId` parameter in `GET /wallets/{walletId}`.",
+        "operationId": "get-wallet",
+        "parameters": {
+          "walletId": "$response.body#/walletId"
+        }
+      },
+      "GetPaymentByPaymentId": {
+        "description": "The `paymentId` value returned in the response can be used as the `paymentId` parameter in `GET /payments/{paymentId}`.",
+        "operationId": "get-payment",
+        "parameters": {
+          "paymentId": "$response.body#/paymentId"
+        }
+      }
+    },
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "CT-Api-Key"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
