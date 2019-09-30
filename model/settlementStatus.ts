@@ -11,23 +11,42 @@
  */
 
 
-export class AccountResult {
+export class SettlementStatus {
     /**
-    * Authorization token
+    * ID of Settlement
     */
-    'token': string;
+    'settlementId': string;
+    /**
+    * Status of settlement
+    */
+    'status': SettlementStatus.StatusEnum;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "settlementId",
+            "baseName": "settlementId",
             "type": "string"
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "SettlementStatus.StatusEnum"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return SettlementStatus.attributeTypeMap;
     }
 }
 
+export namespace SettlementStatus {
+    export enum StatusEnum {
+        Open = <any> 'open',
+        Pending = <any> 'pending',
+        Cancelled = <any> 'cancelled',
+        Completed = <any> 'completed',
+        Expired = <any> 'expired',
+        Refunded = <any> 'refunded'
+    }
+}

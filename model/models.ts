@@ -5,16 +5,22 @@ export * from './accountKYC';
 export * from './accountResult';
 export * from './accountUpdate';
 export * from './errorError';
-export * from './linkedAccount';
+export * from './linkedData';
 export * from './modelError';
-export * from './originatorRecipient';
-export * from './payment';
-export * from './paymentResult';
-export * from './paymentWithId';
-export * from './paymentWithIdAllOf';
+export * from './settlement';
+export * from './settlementCreate';
+export * from './settlementResult';
+export * from './settlementStatus';
+export * from './settlementWithId';
+export * from './settlementWithIdAllOf';
+export * from './settlerRecipient';
 export * from './signature';
 export * from './tokenPayload';
 export * from './tokenRequest';
+export * from './transaction';
+export * from './transactionResult';
+export * from './transactionWithId';
+export * from './transactionWithIdAllOf';
 export * from './wallet';
 export * from './walletResult';
 export * from './walletWithId';
@@ -29,16 +35,22 @@ import { AccountKYC } from './accountKYC';
 import { AccountResult } from './accountResult';
 import { AccountUpdate } from './accountUpdate';
 import { ErrorError } from './errorError';
-import { LinkedAccount } from './linkedAccount';
+import { LinkedData } from './linkedData';
 import { ModelError } from './modelError';
-import { OriginatorRecipient } from './originatorRecipient';
-import { Payment } from './payment';
-import { PaymentResult } from './paymentResult';
-import { PaymentWithId } from './paymentWithId';
-import { PaymentWithIdAllOf } from './paymentWithIdAllOf';
+import { Settlement } from './settlement';
+import { SettlementCreate } from './settlementCreate';
+import { SettlementResult } from './settlementResult';
+import { SettlementStatus } from './settlementStatus';
+import { SettlementWithId } from './settlementWithId';
+import { SettlementWithIdAllOf } from './settlementWithIdAllOf';
+import { SettlerRecipient } from './settlerRecipient';
 import { Signature } from './signature';
 import { TokenPayload } from './tokenPayload';
 import { TokenRequest } from './tokenRequest';
+import { Transaction } from './transaction';
+import { TransactionResult } from './transactionResult';
+import { TransactionWithId } from './transactionWithId';
+import { TransactionWithIdAllOf } from './transactionWithIdAllOf';
 import { Wallet } from './wallet';
 import { WalletResult } from './walletResult';
 import { WalletWithId } from './walletWithId';
@@ -58,8 +70,14 @@ let primitives = [
                  
 let enumsMap: {[index: string]: any} = {
         "AccountInfo.AuthLevelEnum": AccountInfo.AuthLevelEnum,
-        "Payment.TypeEnum": Payment.TypeEnum,
-        "PaymentWithId.TypeEnum": PaymentWithId.TypeEnum,
+        "Settlement.MethodEnum": Settlement.MethodEnum,
+        "Settlement.StatusEnum": Settlement.StatusEnum,
+        "SettlementCreate.MethodEnum": SettlementCreate.MethodEnum,
+        "SettlementStatus.StatusEnum": SettlementStatus.StatusEnum,
+        "SettlementWithId.MethodEnum": SettlementWithId.MethodEnum,
+        "SettlementWithId.StatusEnum": SettlementWithId.StatusEnum,
+        "Transaction.MethodEnum": Transaction.MethodEnum,
+        "TransactionWithId.MethodEnum": TransactionWithId.MethodEnum,
 }
 
 let typeMap: {[index: string]: any} = {
@@ -70,16 +88,22 @@ let typeMap: {[index: string]: any} = {
     "AccountResult": AccountResult,
     "AccountUpdate": AccountUpdate,
     "ErrorError": ErrorError,
-    "LinkedAccount": LinkedAccount,
+    "LinkedData": LinkedData,
     "ModelError": ModelError,
-    "OriginatorRecipient": OriginatorRecipient,
-    "Payment": Payment,
-    "PaymentResult": PaymentResult,
-    "PaymentWithId": PaymentWithId,
-    "PaymentWithIdAllOf": PaymentWithIdAllOf,
+    "Settlement": Settlement,
+    "SettlementCreate": SettlementCreate,
+    "SettlementResult": SettlementResult,
+    "SettlementStatus": SettlementStatus,
+    "SettlementWithId": SettlementWithId,
+    "SettlementWithIdAllOf": SettlementWithIdAllOf,
+    "SettlerRecipient": SettlerRecipient,
     "Signature": Signature,
     "TokenPayload": TokenPayload,
     "TokenRequest": TokenRequest,
+    "Transaction": Transaction,
+    "TransactionResult": TransactionResult,
+    "TransactionWithId": TransactionWithId,
+    "TransactionWithIdAllOf": TransactionWithIdAllOf,
     "Wallet": Wallet,
     "WalletResult": WalletResult,
     "WalletWithId": WalletWithId,

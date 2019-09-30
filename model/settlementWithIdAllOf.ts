@@ -11,23 +11,23 @@
  */
 
 
-export class AccountResult {
+export class SettlementWithIdAllOf {
     /**
-    * Authorization token
+    * ID of Settlement
     */
-    'token': string;
+    'settlementId': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "settlementId",
+            "baseName": "settlementId",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return SettlementWithIdAllOf.attributeTypeMap;
     }
 }
 

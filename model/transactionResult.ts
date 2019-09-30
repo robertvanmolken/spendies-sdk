@@ -11,23 +11,23 @@
  */
 
 
-export class AccountResult {
+export class TransactionResult {
     /**
-    * Authorization token
+    * ID of Transaction
     */
-    'token': string;
+    'transactionId': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "transactionId",
+            "baseName": "transactionId",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return TransactionResult.attributeTypeMap;
     }
 }
 

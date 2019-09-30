@@ -10,24 +10,40 @@
  * Do not edit the class manually.
  */
 
+import { LinkedData } from './linkedData';
 
-export class AccountResult {
+export class SettlerRecipient {
     /**
-    * Authorization token
+    * Name of recipient
     */
-    'token': string;
+    'name'?: string;
+    /**
+    * Wallet address of recipient
+    */
+    'address': string;
+    'links'?: LinkedData;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "name",
+            "baseName": "name",
             "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "string"
+        },
+        {
+            "name": "links",
+            "baseName": "links",
+            "type": "LinkedData"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return SettlerRecipient.attributeTypeMap;
     }
 }
 

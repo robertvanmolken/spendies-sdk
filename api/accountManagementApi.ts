@@ -1,6 +1,6 @@
 /**
  * Spendies Backend API
- * This RESTful API is for accessing the back-end functionality of Spendies,  such as registering and verifying accounts, and creating and retrieving wallets, payment requests, and performing payment fullfilments.
+ * This RESTful API is for accessing the back-end functionality of Spendies,  such as registering and verifying accounts, and creating and retrieving wallets, transaction requests, and performing transaction fullfilments.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: connect@spendies.app
@@ -90,7 +90,7 @@ export class AccountManagementApi {
     }
 
     /**
-     * Register a new account to access the front-end application and create new payment requests.
+     * Register a new account to access the front-end application and create new transaction requests.
      * @summary Provides registration capability for creating a new user account.
      * @param accountCreate Create a new user account
      */
@@ -303,7 +303,7 @@ export class AccountManagementApi {
         });
     }
     /**
-     * After sending a verification code to the given email or phone number the  user needs to complete the process by calling this operation with the  received verification code.
+     * After sending a verification code to the given email or phone number the  user needs to complete the process by calling this operation with the received verification code.
      * @summary Provides KYC capability for storing account email and phone number.
      * @param ctVerifyCode Verification code to validate account
      */

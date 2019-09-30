@@ -1,1 +1,0 @@
-{"version":3,"file":"walletResult.js","sourceRoot":"","sources":["../../model/walletResult.ts"],"names":[],"mappings":";;AAaA;IAAA;IAkBA,CAAC;IAHU,gCAAmB,GAA1B;QACI,OAAO,YAAY,CAAC,gBAAgB,CAAC;IACzC,CAAC;IAXM,0BAAa,GAAuB,SAAS,CAAC;IAE9C,6BAAgB,GAA0D;QAC7E;YACI,MAAM,EAAE,UAAU;YAClB,UAAU,EAAE,UAAU;YACtB,MAAM,EAAE,QAAQ;SACnB;KAAK,CAAC;IAKf,mBAAC;CAAA,AAlBD,IAkBC;AAlBY,oCAAY"}

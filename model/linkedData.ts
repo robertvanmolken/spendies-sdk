@@ -10,24 +10,40 @@
  * Do not edit the class manually.
  */
 
+import { SettlementStatus } from './settlementStatus';
 
-export class AccountResult {
+export class LinkedData {
     /**
-    * Authorization token
+    * ID of Account
     */
-    'token': string;
+    'linkedAccount'?: string;
+    /**
+    * ID of Wallet
+    */
+    'linkedWallet'?: string;
+    'linkedSettlement'?: SettlementStatus;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "linkedAccount",
+            "baseName": "linkedAccount",
             "type": "string"
+        },
+        {
+            "name": "linkedWallet",
+            "baseName": "linkedWallet",
+            "type": "string"
+        },
+        {
+            "name": "linkedSettlement",
+            "baseName": "linkedSettlement",
+            "type": "SettlementStatus"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return LinkedData.attributeTypeMap;
     }
 }
 

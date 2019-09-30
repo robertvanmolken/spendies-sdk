@@ -11,23 +11,32 @@
  */
 
 
-export class AccountResult {
+export class SettlementResult {
     /**
-    * Authorization token
+    * ID of Settlement
     */
-    'token': string;
+    'settlementId': string;
+    /**
+    * URL to settle payment
+    */
+    'paymentUrl': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "token",
-            "baseName": "token",
+            "name": "settlementId",
+            "baseName": "settlementId",
+            "type": "string"
+        },
+        {
+            "name": "paymentUrl",
+            "baseName": "paymentUrl",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return AccountResult.attributeTypeMap;
+        return SettlementResult.attributeTypeMap;
     }
 }
 
