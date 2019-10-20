@@ -18,7 +18,7 @@ import { Transaction } from '../model/transaction';
 import { TransactionResult } from '../model/transactionResult';
 import { TransactionWithId } from '../model/transactionWithId';
 
-import { ObjectSerializer, Authentication, VoidAuth } from '../model/models';
+import { ObjectSerializer, Authentication, VoidAuth, OAuth } from '../model/models';
 import { ApiKeyAuth } from '../model/models';
 import { HttpBasicAuth } from '../model/models';
 
@@ -40,21 +40,19 @@ export class TransactionManagementApi {
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
         'apiKeyAuth': new ApiKeyAuth('header', 'CT-Api-Key'),
-        'bearerAuth': new HttpBasicAuth(),
+        'bearerAuth': new OAuth(),
     }
 
     constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password
+    constructor(accessToken: string, basePath?: string) {
+        if (accessToken) {
+            this.accessToken = accessToken;
             if (basePath) {
                 this.basePath = basePath;
             }
         } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
+            if (basePath) {
+                this.basePath = basePath
             }
         }
     }
@@ -78,12 +76,9 @@ export class TransactionManagementApi {
     public setApiKey(key: TransactionManagementApiApiKeys, value: string) {
         (this.authentications as any)[TransactionManagementApiApiKeys[key]].apiKey = value;
     }
-    set username(username: string) {
-        this.authentications.bearerAuth.username = username;
-    }
 
-    set password(password: string) {
-        this.authentications.bearerAuth.password = password;
+    set accessToken(accessToken: string) {
+        this.authentications.bearerAuth.accessToken = accessToken;
     }
 
     /**
