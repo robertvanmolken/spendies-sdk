@@ -3,9 +3,7 @@ import http = require('http');
 import { Wallet } from '../model/wallet';
 import { WalletResult } from '../model/walletResult';
 import { WalletWithId } from '../model/walletWithId';
-import { Authentication } from '../model/models';
-import { ApiKeyAuth } from '../model/models';
-import { HttpBasicAuth } from '../model/models';
+import { Authentication, ApiKeyAuth, OAuth } from '../model/models';
 export declare enum WalletManagementApiApiKeys {
     apiKeyAuth = 0
 }
@@ -16,16 +14,14 @@ export declare class WalletManagementApi {
     protected authentications: {
         'default': Authentication;
         'apiKeyAuth': ApiKeyAuth;
-        'bearerAuth': HttpBasicAuth;
+        'bearerAuth': OAuth;
     };
-    constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
+    constructor(accessToken?: string, basePath?: string);
     useQuerystring: boolean;
     basePath: string;
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: WalletManagementApiApiKeys, value: string): void;
-    username: string;
-    password: string;
+    accessToken: string;
     createWallet(wallet?: Wallet, options?: {
         headers: {
             [name: string]: string;

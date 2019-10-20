@@ -6,9 +6,7 @@ import { AccountKYC } from '../model/accountKYC';
 import { AccountResult } from '../model/accountResult';
 import { AccountUpdate } from '../model/accountUpdate';
 import { TokenRequest } from '../model/tokenRequest';
-import { Authentication } from '../model/models';
-import { ApiKeyAuth } from '../model/models';
-import { HttpBasicAuth } from '../model/models';
+import { Authentication, ApiKeyAuth, OAuth } from '../model/models';
 export declare enum AccountManagementApiApiKeys {
     apiKeyAuth = 0
 }
@@ -19,16 +17,14 @@ export declare class AccountManagementApi {
     protected authentications: {
         'default': Authentication;
         'apiKeyAuth': ApiKeyAuth;
-        'bearerAuth': HttpBasicAuth;
+        'bearerAuth': OAuth;
     };
-    constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
+    constructor(accessToken?: string, basePath?: string);
     useQuerystring: boolean;
     basePath: string;
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: AccountManagementApiApiKeys, value: string): void;
-    username: string;
-    password: string;
+    accessToken: string;
     createAccount(accountCreate?: AccountCreate, options?: {
         headers: {
             [name: string]: string;

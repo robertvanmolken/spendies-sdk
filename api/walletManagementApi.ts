@@ -18,9 +18,7 @@ import { Wallet } from '../model/wallet';
 import { WalletResult } from '../model/walletResult';
 import { WalletWithId } from '../model/walletWithId';
 
-import { ObjectSerializer, Authentication, VoidAuth } from '../model/models';
-import { ApiKeyAuth } from '../model/models';
-import { HttpBasicAuth } from '../model/models';
+import { ObjectSerializer, Authentication, VoidAuth, ApiKeyAuth, OAuth } from '../model/models';
 
 let defaultBasePath = 'https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0';
 
@@ -40,21 +38,18 @@ export class WalletManagementApi {
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
         'apiKeyAuth': new ApiKeyAuth('header', 'CT-Api-Key'),
-        'bearerAuth': new HttpBasicAuth(),
+        'bearerAuth': new OAuth(),
     }
 
-    constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password
+    constructor(accessToken?: string, basePath?: string) {
+        if (accessToken) {
+            this.accessToken = accessToken;
             if (basePath) {
                 this.basePath = basePath;
             }
         } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
+            if (basePath) {
+                this.basePath = basePath
             }
         }
     }
@@ -78,12 +73,9 @@ export class WalletManagementApi {
     public setApiKey(key: WalletManagementApiApiKeys, value: string) {
         (this.authentications as any)[WalletManagementApiApiKeys[key]].apiKey = value;
     }
-    set username(username: string) {
-        this.authentications.bearerAuth.username = username;
-    }
 
-    set password(password: string) {
-        this.authentications.bearerAuth.password = password;
+    set accessToken(accessToken: string) {
+        this.authentications.bearerAuth.accessToken = accessToken;
     }
 
     /**

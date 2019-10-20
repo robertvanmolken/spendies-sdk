@@ -38,32 +38,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var localVarRequest = require("request");
 var models_1 = require("../model/models");
 var models_2 = require("../model/models");
-var models_3 = require("../model/models");
 var defaultBasePath = 'https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0';
 var SettlementManagementApiApiKeys;
 (function (SettlementManagementApiApiKeys) {
     SettlementManagementApiApiKeys[SettlementManagementApiApiKeys["apiKeyAuth"] = 0] = "apiKeyAuth";
 })(SettlementManagementApiApiKeys = exports.SettlementManagementApiApiKeys || (exports.SettlementManagementApiApiKeys = {}));
 var SettlementManagementApi = (function () {
-    function SettlementManagementApi(basePathOrUsername, password, basePath) {
+    function SettlementManagementApi(accessToken, basePath) {
         this._basePath = defaultBasePath;
         this.defaultHeaders = {};
         this._useQuerystring = false;
         this.authentications = {
             'default': new models_1.VoidAuth(),
             'apiKeyAuth': new models_2.ApiKeyAuth('header', 'CT-Api-Key'),
-            'bearerAuth': new models_3.HttpBasicAuth(),
+            'bearerAuth': new models_1.OAuth(),
         };
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password;
+        if (accessToken) {
+            this.accessToken = accessToken;
             if (basePath) {
                 this.basePath = basePath;
             }
         }
         else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername;
+            if (basePath) {
+                this.basePath = basePath;
             }
         }
     }
@@ -90,16 +88,9 @@ var SettlementManagementApi = (function () {
     SettlementManagementApi.prototype.setApiKey = function (key, value) {
         this.authentications[SettlementManagementApiApiKeys[key]].apiKey = value;
     };
-    Object.defineProperty(SettlementManagementApi.prototype, "username", {
-        set: function (username) {
-            this.authentications.bearerAuth.username = username;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(SettlementManagementApi.prototype, "password", {
-        set: function (password) {
-            this.authentications.bearerAuth.password = password;
+    Object.defineProperty(SettlementManagementApi.prototype, "accessToken", {
+        set: function (accessToken) {
+            this.authentications.bearerAuth.accessToken = accessToken;
         },
         enumerable: true,
         configurable: true

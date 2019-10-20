@@ -3,9 +3,7 @@ import http = require('http');
 import { Transaction } from '../model/transaction';
 import { TransactionResult } from '../model/transactionResult';
 import { TransactionWithId } from '../model/transactionWithId';
-import { Authentication } from '../model/models';
-import { ApiKeyAuth } from '../model/models';
-import { OAuth } from '../model/models';
+import { Authentication, ApiKeyAuth, OAuth } from '../model/models';
 export declare enum TransactionManagementApiApiKeys {
     apiKeyAuth = 0
 }
@@ -18,7 +16,7 @@ export declare class TransactionManagementApi {
         'apiKeyAuth': ApiKeyAuth;
         'bearerAuth': OAuth;
     };
-    constructor(accessToken: string, basePath?: string);
+    constructor(accessToken?: string, basePath?: string);
     useQuerystring: boolean;
     basePath: string;
     setDefaultAuthentication(auth: Authentication): void;

@@ -37,33 +37,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var localVarRequest = require("request");
 var models_1 = require("../model/models");
-var models_2 = require("../model/models");
-var models_3 = require("../model/models");
 var defaultBasePath = 'https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0';
 var AccountManagementApiApiKeys;
 (function (AccountManagementApiApiKeys) {
     AccountManagementApiApiKeys[AccountManagementApiApiKeys["apiKeyAuth"] = 0] = "apiKeyAuth";
 })(AccountManagementApiApiKeys = exports.AccountManagementApiApiKeys || (exports.AccountManagementApiApiKeys = {}));
 var AccountManagementApi = (function () {
-    function AccountManagementApi(basePathOrUsername, password, basePath) {
+    function AccountManagementApi(accessToken, basePath) {
         this._basePath = defaultBasePath;
         this.defaultHeaders = {};
         this._useQuerystring = false;
         this.authentications = {
             'default': new models_1.VoidAuth(),
-            'apiKeyAuth': new models_2.ApiKeyAuth('header', 'CT-Api-Key'),
-            'bearerAuth': new models_3.HttpBasicAuth(),
+            'apiKeyAuth': new models_1.ApiKeyAuth('header', 'CT-Api-Key'),
+            'bearerAuth': new models_1.OAuth(),
         };
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password;
+        if (accessToken) {
+            this.accessToken = accessToken;
             if (basePath) {
                 this.basePath = basePath;
             }
         }
         else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername;
+            if (basePath) {
+                this.basePath = basePath;
             }
         }
     }
@@ -90,16 +87,9 @@ var AccountManagementApi = (function () {
     AccountManagementApi.prototype.setApiKey = function (key, value) {
         this.authentications[AccountManagementApiApiKeys[key]].apiKey = value;
     };
-    Object.defineProperty(AccountManagementApi.prototype, "username", {
-        set: function (username) {
-            this.authentications.bearerAuth.username = username;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AccountManagementApi.prototype, "password", {
-        set: function (password) {
-            this.authentications.bearerAuth.password = password;
+    Object.defineProperty(AccountManagementApi.prototype, "accessToken", {
+        set: function (accessToken) {
+            this.authentications.bearerAuth.accessToken = accessToken;
         },
         enumerable: true,
         configurable: true
