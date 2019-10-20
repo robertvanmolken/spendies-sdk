@@ -18,9 +18,9 @@ import { Transaction } from '../model/transaction';
 import { TransactionResult } from '../model/transactionResult';
 import { TransactionWithId } from '../model/transactionWithId';
 
-import { ObjectSerializer, Authentication, VoidAuth, OAuth } from '../model/models';
+import { ObjectSerializer, Authentication, VoidAuth } from '../model/models';
 import { ApiKeyAuth } from '../model/models';
-import { HttpBasicAuth } from '../model/models';
+import { OAuth } from '../model/models';
 
 let defaultBasePath = 'https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0';
 
@@ -43,7 +43,6 @@ export class TransactionManagementApi {
         'bearerAuth': new OAuth(),
     }
 
-    constructor(basePath?: string);
     constructor(accessToken: string, basePath?: string) {
         if (accessToken) {
             this.accessToken = accessToken;
@@ -78,6 +77,10 @@ export class TransactionManagementApi {
     }
 
     set accessToken(accessToken: string) {
+        this.authentications.bearerAuth.accessToken = accessToken;
+    }
+
+    public setAccessToken(accessToken: string) {
         this.authentications.bearerAuth.accessToken = accessToken;
     }
 

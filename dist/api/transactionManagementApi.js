@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var localVarRequest = require("request");
 var models_1 = require("../model/models");
 var models_2 = require("../model/models");
+var models_3 = require("../model/models");
 var defaultBasePath = 'https://virtserver.swaggerhub.com/robertvanmolken/SpendiesAPI/1.0';
 var TransactionManagementApiApiKeys;
 (function (TransactionManagementApiApiKeys) {
@@ -51,7 +52,7 @@ var TransactionManagementApi = (function () {
         this.authentications = {
             'default': new models_1.VoidAuth(),
             'apiKeyAuth': new models_2.ApiKeyAuth('header', 'CT-Api-Key'),
-            'bearerAuth': new models_1.OAuth(),
+            'bearerAuth': new models_3.OAuth(),
         };
         if (accessToken) {
             this.accessToken = accessToken;
@@ -95,6 +96,9 @@ var TransactionManagementApi = (function () {
         enumerable: true,
         configurable: true
     });
+    TransactionManagementApi.prototype.setAccessToken = function (accessToken) {
+        this.authentications.bearerAuth.accessToken = accessToken;
+    };
     TransactionManagementApi.prototype.createTransaction = function (transaction, options) {
         if (options === void 0) { options = { headers: {} }; }
         return __awaiter(this, void 0, void 0, function () {
