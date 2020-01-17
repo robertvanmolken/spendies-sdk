@@ -4,6 +4,7 @@ export * from './accountInfo';
 export * from './accountKYC';
 export * from './accountResult';
 export * from './accountUpdate';
+export * from './bankCheck';
 export * from './errorError';
 export * from './linkedData';
 export * from './modelError';
@@ -34,6 +35,7 @@ import { AccountInfo } from './accountInfo';
 import { AccountKYC } from './accountKYC';
 import { AccountResult } from './accountResult';
 import { AccountUpdate } from './accountUpdate';
+import { BankCheck } from './bankCheck';
 import { ErrorError } from './errorError';
 import { LinkedData } from './linkedData';
 import { ModelError } from './modelError';
@@ -70,6 +72,7 @@ let primitives = [
                  
 let enumsMap: {[index: string]: any} = {
         "AccountInfo.AuthLevelEnum": AccountInfo.AuthLevelEnum,
+        "BankCheck.MethodEnum": BankCheck.MethodEnum,
         "Settlement.MethodEnum": Settlement.MethodEnum,
         "Settlement.StatusEnum": Settlement.StatusEnum,
         "SettlementCreate.MethodEnum": SettlementCreate.MethodEnum,
@@ -87,6 +90,7 @@ let typeMap: {[index: string]: any} = {
     "AccountKYC": AccountKYC,
     "AccountResult": AccountResult,
     "AccountUpdate": AccountUpdate,
+    "BankCheck": BankCheck,
     "ErrorError": ErrorError,
     "LinkedData": LinkedData,
     "ModelError": ModelError,

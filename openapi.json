@@ -87,7 +87,7 @@
           "Account Management"
         ],
         "summary": "Provides KYC capability for existing accounts for verifying email and phone number.",
-        "description": "To allow other people to pay a user back in FIAT currency we need to  perform a KYC enquiry. This operation sends a verification code to given email address or phone number to authorize this capability.",
+        "description": "To allow other people to pay a user back in FIAT currency we need to perform a 2-phase KYC enquiry. This operation sends a verification code to given email address or phone number to authorize this capability.",
         "operationId": "verify-account",
         "security": [
           {
@@ -123,7 +123,7 @@
           "Account Management"
         ],
         "summary": "Provides KYC capability for storing account email and phone number.",
-        "description": "After sending a verification code to the given email or phone number the  user needs to complete the process by calling this operation with the received verification code.",
+        "description": "After sending a verification code to the given email or phone number the user needs to complete the process by calling this operation with the received verification code.",
         "operationId": "validate-account",
         "security": [
           {
@@ -155,6 +155,108 @@
             "$ref": "#/components/responses/UnprocessableEntityError"
           },
           "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/accounts/bankcheck": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides KYC capability for existing accounts for verifying their bank.",
+        "description": "To allow other people to pay a user back in FIAT currency we need to perform a 2-phase KYC enquiry. This operation creates a settlement to validate identity of person through its bank.",
+        "operationId": "verify-bank",
+        "security": [
+          {
+            "apiKeyAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/VerifyBankRequest"
+        },
+        "responses": {
+          "204": {
+            "description": "Verification code send"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/accounts/bankcheck/callback": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Provides callback capability for processing account KYC status.",
+        "description": "Process the account status update from third party KYC services.",
+        "operationId": "validate-bank",
+        "security": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "accountId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AccountId"
+            },
+            "description": "The account ID"
+          },
+          {
+            "in": "query",
+            "name": "provider",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "nocks"
+            },
+            "description": "Provider who executed KYC service"
+          }
+        ],
+        "requestBody": {
+          "description": "Reference uuid of KYC transaction",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProcessCallbackResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntityError"
+          },
+          "500": {
             "$ref": "#/components/responses/InternalServerError"
           }
         }
@@ -1046,6 +1148,28 @@
           "authLevel"
         ]
       },
+      "BankCheck": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "ideal"
+            ],
+            "example": "ideal",
+            "description": "Method of Verification"
+          },
+          "issuer": {
+            "type": "string",
+            "example": "RABONL2U",
+            "description": "Settle verification through issuer"
+          }
+        },
+        "required": [
+          "method",
+          "issuer"
+        ]
+      },
       "TokenPayload": {
         "type": "object",
         "properties": {
@@ -1580,11 +1704,21 @@
         }
       },
       "VerifyAccountRequest": {
-        "description": "Verify a user account",
+        "description": "Verify a user account through its device",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/AccountKYC"
+            }
+          }
+        }
+      },
+      "VerifyBankRequest": {
+        "description": "Verify a user account through its bank",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BankCheck"
             }
           }
         }

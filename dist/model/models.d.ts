@@ -4,6 +4,7 @@ export * from './accountInfo';
 export * from './accountKYC';
 export * from './accountResult';
 export * from './accountUpdate';
+export * from './bankCheck';
 export * from './errorError';
 export * from './linkedData';
 export * from './modelError';

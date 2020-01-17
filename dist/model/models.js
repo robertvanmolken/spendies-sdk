@@ -9,6 +9,7 @@ __export(require("./accountInfo"));
 __export(require("./accountKYC"));
 __export(require("./accountResult"));
 __export(require("./accountUpdate"));
+__export(require("./bankCheck"));
 __export(require("./errorError"));
 __export(require("./linkedData"));
 __export(require("./modelError"));
@@ -36,6 +37,7 @@ var accountInfo_1 = require("./accountInfo");
 var accountKYC_1 = require("./accountKYC");
 var accountResult_1 = require("./accountResult");
 var accountUpdate_1 = require("./accountUpdate");
+var bankCheck_1 = require("./bankCheck");
 var errorError_1 = require("./errorError");
 var linkedData_1 = require("./linkedData");
 var modelError_1 = require("./modelError");
@@ -69,6 +71,7 @@ var primitives = [
 ];
 var enumsMap = {
     "AccountInfo.AuthLevelEnum": accountInfo_1.AccountInfo.AuthLevelEnum,
+    "BankCheck.MethodEnum": bankCheck_1.BankCheck.MethodEnum,
     "Settlement.MethodEnum": settlement_1.Settlement.MethodEnum,
     "Settlement.StatusEnum": settlement_1.Settlement.StatusEnum,
     "SettlementCreate.MethodEnum": settlementCreate_1.SettlementCreate.MethodEnum,
@@ -85,6 +88,7 @@ var typeMap = {
     "AccountKYC": accountKYC_1.AccountKYC,
     "AccountResult": accountResult_1.AccountResult,
     "AccountUpdate": accountUpdate_1.AccountUpdate,
+    "BankCheck": bankCheck_1.BankCheck,
     "ErrorError": errorError_1.ErrorError,
     "LinkedData": linkedData_1.LinkedData,
     "ModelError": modelError_1.ModelError,

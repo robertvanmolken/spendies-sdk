@@ -362,6 +362,70 @@ var AccountManagementApi = (function () {
             });
         });
     };
+    AccountManagementApi.prototype.validateBank = function (body, id, provider, options) {
+        if (options === void 0) { options = { headers: {} }; }
+        return __awaiter(this, void 0, void 0, function () {
+            var localVarPath, localVarQueryParameters, localVarHeaderParams, localVarFormParams, localVarUseFormData, localVarRequestOptions, authenticationPromise;
+            var _this = this;
+            return __generator(this, function (_a) {
+                localVarPath = this.basePath + '/accounts/bankcheck/callback';
+                localVarQueryParameters = {};
+                localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+                localVarFormParams = {};
+                if (body === null || body === undefined) {
+                    throw new Error('Required parameter body was null or undefined when calling validateBank.');
+                }
+                if (id === null || id === undefined) {
+                    throw new Error('Required parameter id was null or undefined when calling validateBank.');
+                }
+                if (id !== undefined) {
+                    localVarQueryParameters['id'] = models_1.ObjectSerializer.serialize(id, "string");
+                }
+                if (provider !== undefined) {
+                    localVarQueryParameters['provider'] = models_1.ObjectSerializer.serialize(provider, "string");
+                }
+                Object.assign(localVarHeaderParams, options.headers);
+                localVarUseFormData = false;
+                localVarRequestOptions = {
+                    method: 'POST',
+                    qs: localVarQueryParameters,
+                    headers: localVarHeaderParams,
+                    uri: localVarPath,
+                    useQuerystring: this._useQuerystring,
+                    json: true,
+                    body: models_1.ObjectSerializer.serialize(body, "string")
+                };
+                authenticationPromise = Promise.resolve();
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.default.applyToRequest(localVarRequestOptions); });
+                return [2, authenticationPromise.then(function () {
+                        if (Object.keys(localVarFormParams).length) {
+                            if (localVarUseFormData) {
+                                localVarRequestOptions.formData = localVarFormParams;
+                            }
+                            else {
+                                localVarRequestOptions.form = localVarFormParams;
+                            }
+                        }
+                        return new Promise(function (resolve, reject) {
+                            localVarRequest(localVarRequestOptions, function (error, response, body) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    body = models_1.ObjectSerializer.deserialize(body, "object");
+                                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                        resolve({ response: response, body: body });
+                                    }
+                                    else {
+                                        reject({ response: response, body: body });
+                                    }
+                                }
+                            });
+                        });
+                    })];
+            });
+        });
+    };
     AccountManagementApi.prototype.verifyAccount = function (accountKYC, options) {
         if (options === void 0) { options = { headers: {} }; }
         return __awaiter(this, void 0, void 0, function () {
@@ -382,6 +446,59 @@ var AccountManagementApi = (function () {
                     useQuerystring: this._useQuerystring,
                     json: true,
                     body: models_1.ObjectSerializer.serialize(accountKYC, "AccountKYC")
+                };
+                authenticationPromise = Promise.resolve();
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.apiKeyAuth.applyToRequest(localVarRequestOptions); });
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.bearerAuth.applyToRequest(localVarRequestOptions); });
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.default.applyToRequest(localVarRequestOptions); });
+                return [2, authenticationPromise.then(function () {
+                        if (Object.keys(localVarFormParams).length) {
+                            if (localVarUseFormData) {
+                                localVarRequestOptions.formData = localVarFormParams;
+                            }
+                            else {
+                                localVarRequestOptions.form = localVarFormParams;
+                            }
+                        }
+                        return new Promise(function (resolve, reject) {
+                            localVarRequest(localVarRequestOptions, function (error, response, body) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                        resolve({ response: response, body: body });
+                                    }
+                                    else {
+                                        reject({ response: response, body: body });
+                                    }
+                                }
+                            });
+                        });
+                    })];
+            });
+        });
+    };
+    AccountManagementApi.prototype.verifyBank = function (bankCheck, options) {
+        if (options === void 0) { options = { headers: {} }; }
+        return __awaiter(this, void 0, void 0, function () {
+            var localVarPath, localVarQueryParameters, localVarHeaderParams, localVarFormParams, localVarUseFormData, localVarRequestOptions, authenticationPromise;
+            var _this = this;
+            return __generator(this, function (_a) {
+                localVarPath = this.basePath + '/accounts/bankcheck';
+                localVarQueryParameters = {};
+                localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+                localVarFormParams = {};
+                Object.assign(localVarHeaderParams, options.headers);
+                localVarUseFormData = false;
+                localVarRequestOptions = {
+                    method: 'POST',
+                    qs: localVarQueryParameters,
+                    headers: localVarHeaderParams,
+                    uri: localVarPath,
+                    useQuerystring: this._useQuerystring,
+                    json: true,
+                    body: models_1.ObjectSerializer.serialize(bankCheck, "BankCheck")
                 };
                 authenticationPromise = Promise.resolve();
                 authenticationPromise = authenticationPromise.then(function () { return _this.authentications.apiKeyAuth.applyToRequest(localVarRequestOptions); });

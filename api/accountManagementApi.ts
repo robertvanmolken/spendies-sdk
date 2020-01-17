@@ -19,6 +19,7 @@ import { AccountInfo } from '../model/accountInfo';
 import { AccountKYC } from '../model/accountKYC';
 import { AccountResult } from '../model/accountResult';
 import { AccountUpdate } from '../model/accountUpdate';
+import { BankCheck } from '../model/bankCheck';
 import { TokenRequest } from '../model/tokenRequest';
 
 import { ObjectSerializer, Authentication, VoidAuth, ApiKeyAuth, OAuth } from '../model/models';
@@ -295,7 +296,7 @@ export class AccountManagementApi {
         });
     }
     /**
-     * After sending a verification code to the given email or phone number the  user needs to complete the process by calling this operation with the received verification code.
+     * After sending a verification code to the given email or phone number the user needs to complete the process by calling this operation with the received verification code.
      * @summary Provides KYC capability for storing account email and phone number.
      * @param ctVerifyCode Verification code to validate account
      */
@@ -354,9 +355,80 @@ export class AccountManagementApi {
         });
     }
     /**
-     * To allow other people to pay a user back in FIAT currency we need to  perform a KYC enquiry. This operation sends a verification code to given email address or phone number to authorize this capability.
+     * Process the account status update from third party KYC services.
+     * @summary Provides callback capability for processing account KYC status.
+     * @param body Reference uuid of KYC transaction
+     * @param accountId The account ID
+     * @param provider Provider who executed KYC service
+     */
+    public async validateBank (body: string, id: string, provider?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: object;  }> {
+        const localVarPath = this.basePath + '/accounts/bankcheck/callback';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling validateBank.');
+        }
+
+        // verify required parameter 'accountId' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling validateBank.');
+        }
+
+        if (id !== undefined) {
+            localVarQueryParameters['id'] = ObjectSerializer.serialize(id, "string");
+        }
+
+        if (provider !== undefined) {
+            localVarQueryParameters['provider'] = ObjectSerializer.serialize(provider, "string");
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(body, "string")
+        };
+
+        let authenticationPromise = Promise.resolve();
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+        return authenticationPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.ClientResponse; body: object;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        body = ObjectSerializer.deserialize(body, "object");
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject({ response: response, body: body });
+                        }
+                    }
+                });
+            });
+        });
+    }
+    /**
+     * To allow other people to pay a user back in FIAT currency we need to perform a 2-phase KYC enquiry. This operation sends a verification code to given email address or phone number to authorize this capability.
      * @summary Provides KYC capability for existing accounts for verifying email and phone number.
-     * @param accountKYC Verify a user account
+     * @param accountKYC Verify a user account through its device
      */
     public async verifyAccount (accountKYC?: AccountKYC, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/accounts/verify';
@@ -376,6 +448,60 @@ export class AccountManagementApi {
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(accountKYC, "AccountKYC")
+        };
+
+        let authenticationPromise = Promise.resolve();
+        authenticationPromise = authenticationPromise.then(() => this.authentications.apiKeyAuth.applyToRequest(localVarRequestOptions));
+
+        authenticationPromise = authenticationPromise.then(() => this.authentications.bearerAuth.applyToRequest(localVarRequestOptions));
+
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+        return authenticationPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject({ response: response, body: body });
+                        }
+                    }
+                });
+            });
+        });
+    }
+    /**
+     * To allow other people to pay a user back in FIAT currency we need to perform a 2-phase KYC enquiry. This operation creates a settlement to validate identity of person through its bank.
+     * @summary Provides KYC capability for existing accounts for verifying their bank.
+     * @param bankCheck Verify a user account through its bank
+     */
+    public async verifyBank (bankCheck?: BankCheck, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+        const localVarPath = this.basePath + '/accounts/bankcheck';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(bankCheck, "BankCheck")
         };
 
         let authenticationPromise = Promise.resolve();

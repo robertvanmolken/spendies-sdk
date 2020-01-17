@@ -5,6 +5,7 @@ import { AccountInfo } from '../model/accountInfo';
 import { AccountKYC } from '../model/accountKYC';
 import { AccountResult } from '../model/accountResult';
 import { AccountUpdate } from '../model/accountUpdate';
+import { BankCheck } from '../model/bankCheck';
 import { TokenRequest } from '../model/tokenRequest';
 import { Authentication, ApiKeyAuth, OAuth } from '../model/models';
 export declare enum AccountManagementApiApiKeys {
@@ -65,7 +66,23 @@ export declare class AccountManagementApi {
         response: http.ClientResponse;
         body?: any;
     }>;
+    validateBank(body: string, id: string, provider?: string, options?: {
+        headers: {
+            [name: string]: string;
+        };
+    }): Promise<{
+        response: http.ClientResponse;
+        body: object;
+    }>;
     verifyAccount(accountKYC?: AccountKYC, options?: {
+        headers: {
+            [name: string]: string;
+        };
+    }): Promise<{
+        response: http.ClientResponse;
+        body?: any;
+    }>;
+    verifyBank(bankCheck?: BankCheck, options?: {
         headers: {
             [name: string]: string;
         };
