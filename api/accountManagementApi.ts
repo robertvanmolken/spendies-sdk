@@ -20,6 +20,7 @@ import { AccountKYC } from '../model/accountKYC';
 import { AccountResult } from '../model/accountResult';
 import { AccountUpdate } from '../model/accountUpdate';
 import { BankCheck } from '../model/bankCheck';
+import { BankCheckResult } from '../model/bankCheckResult';
 import { TokenRequest } from '../model/tokenRequest';
 
 import { ObjectSerializer, Authentication, VoidAuth, ApiKeyAuth, OAuth } from '../model/models';
@@ -358,7 +359,7 @@ export class AccountManagementApi {
      * Process the account status update from third party KYC services.
      * @summary Provides callback capability for processing account KYC status.
      * @param body Reference uuid of KYC transaction
-     * @param accountId The account ID
+     * @param id The request ID
      * @param provider Provider who executed KYC service
      */
     public async validateBank (body: string, id: string, provider?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: object;  }> {
@@ -372,7 +373,7 @@ export class AccountManagementApi {
             throw new Error('Required parameter body was null or undefined when calling validateBank.');
         }
 
-        // verify required parameter 'accountId' is not null or undefined
+        // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling validateBank.');
         }
@@ -484,7 +485,7 @@ export class AccountManagementApi {
      * @summary Provides KYC capability for existing accounts for verifying their bank.
      * @param bankCheck Verify a user account through its bank
      */
-    public async verifyBank (bankCheck?: BankCheck, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public async verifyBank (bankCheck?: BankCheck, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: BankCheckResult;  }> {
         const localVarPath = this.basePath + '/accounts/bankcheck';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -518,11 +519,12 @@ export class AccountManagementApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+            return new Promise<{ response: http.ClientResponse; body: BankCheckResult;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
+                        body = ObjectSerializer.deserialize(body, "BankCheckResult");
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                             resolve({ response: response, body: body });
                         } else {

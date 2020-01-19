@@ -1,0 +1,1 @@
+{"version":3,"file":"bankCheckResult.js","sourceRoot":"","sources":["../../model/bankCheckResult.ts"],"names":[],"mappings":";;AAaA;IAAA;IAkBA,CAAC;IAHU,mCAAmB,GAA1B;QACI,OAAO,eAAe,CAAC,gBAAgB,CAAC;IAC5C,CAAC;IAXM,6BAAa,GAAuB,SAAS,CAAC;IAE9C,gCAAgB,GAA0D;QAC7E;YACI,MAAM,EAAE,aAAa;YACrB,UAAU,EAAE,aAAa;YACzB,MAAM,EAAE,QAAQ;SACnB;KAAK,CAAC;IAKf,sBAAC;CAAA,AAlBD,IAkBC;AAlBY,0CAAe"}

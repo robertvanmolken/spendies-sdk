@@ -519,6 +519,7 @@ var AccountManagementApi = (function () {
                                     reject(error);
                                 }
                                 else {
+                                    body = models_1.ObjectSerializer.deserialize(body, "BankCheckResult");
                                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                                         resolve({ response: response, body: body });
                                     }

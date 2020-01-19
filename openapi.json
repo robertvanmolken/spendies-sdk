@@ -180,8 +180,8 @@
           "$ref": "#/components/requestBodies/VerifyBankRequest"
         },
         "responses": {
-          "204": {
-            "description": "Verification code send"
+          "201": {
+            "$ref": "#/components/responses/InitBankCheckResponse"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -210,12 +210,12 @@
         "parameters": [
           {
             "in": "query",
-            "name": "accountId",
+            "name": "id",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/AccountId"
+              "$ref": "#/components/schemas/SettlementId"
             },
-            "description": "The account ID"
+            "description": "The request ID"
           },
           {
             "in": "query",
@@ -1170,6 +1170,20 @@
           "issuer"
         ]
       },
+      "BankCheckResult": {
+        "type": "object",
+        "properties": {
+          "redirectUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://provider.com/transaction/9eb08ee6-edea-4de0-8403-399698d0e32",
+            "description": "URL to check bank"
+          }
+        },
+        "required": [
+          "redirectUrl"
+        ]
+      },
       "TokenPayload": {
         "type": "object",
         "properties": {
@@ -1940,6 +1954,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/SettlementResult"
+            }
+          }
+        }
+      },
+      "InitBankCheckResponse": {
+        "description": "Successful initiated bank check",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BankCheckResult"
             }
           }
         }

@@ -10,6 +10,7 @@ __export(require("./accountKYC"));
 __export(require("./accountResult"));
 __export(require("./accountUpdate"));
 __export(require("./bankCheck"));
+__export(require("./bankCheckResult"));
 __export(require("./errorError"));
 __export(require("./linkedData"));
 __export(require("./modelError"));
@@ -38,6 +39,7 @@ var accountKYC_1 = require("./accountKYC");
 var accountResult_1 = require("./accountResult");
 var accountUpdate_1 = require("./accountUpdate");
 var bankCheck_1 = require("./bankCheck");
+var bankCheckResult_1 = require("./bankCheckResult");
 var errorError_1 = require("./errorError");
 var linkedData_1 = require("./linkedData");
 var modelError_1 = require("./modelError");
@@ -89,6 +91,7 @@ var typeMap = {
     "AccountResult": accountResult_1.AccountResult,
     "AccountUpdate": accountUpdate_1.AccountUpdate,
     "BankCheck": bankCheck_1.BankCheck,
+    "BankCheckResult": bankCheckResult_1.BankCheckResult,
     "ErrorError": errorError_1.ErrorError,
     "LinkedData": linkedData_1.LinkedData,
     "ModelError": modelError_1.ModelError,

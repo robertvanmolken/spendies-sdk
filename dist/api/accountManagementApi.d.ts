@@ -6,6 +6,7 @@ import { AccountKYC } from '../model/accountKYC';
 import { AccountResult } from '../model/accountResult';
 import { AccountUpdate } from '../model/accountUpdate';
 import { BankCheck } from '../model/bankCheck';
+import { BankCheckResult } from '../model/bankCheckResult';
 import { TokenRequest } from '../model/tokenRequest';
 import { Authentication, ApiKeyAuth, OAuth } from '../model/models';
 export declare enum AccountManagementApiApiKeys {
@@ -88,7 +89,7 @@ export declare class AccountManagementApi {
         };
     }): Promise<{
         response: http.ClientResponse;
-        body?: any;
+        body: BankCheckResult;
     }>;
     verifyMagiclink(mlv: string, ctSignature: string, options?: {
         headers: {
