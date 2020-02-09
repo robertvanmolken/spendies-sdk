@@ -205,6 +205,62 @@ var SettlementManagementApi = (function () {
             });
         });
     };
+    SettlementManagementApi.prototype.getSettlementStatus = function (settlementId, options) {
+        if (options === void 0) { options = { headers: {} }; }
+        return __awaiter(this, void 0, void 0, function () {
+            var localVarPath, localVarQueryParameters, localVarHeaderParams, localVarFormParams, localVarUseFormData, localVarRequestOptions, authenticationPromise;
+            var _this = this;
+            return __generator(this, function (_a) {
+                localVarPath = this.basePath + '/settlements/{settlementId}/status'
+                    .replace('{' + 'settlementId' + '}', encodeURIComponent(String(settlementId)));
+                localVarQueryParameters = {};
+                localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+                localVarFormParams = {};
+                if (settlementId === null || settlementId === undefined) {
+                    throw new Error('Required parameter settlementId was null or undefined when calling getSettlementStatus.');
+                }
+                Object.assign(localVarHeaderParams, options.headers);
+                localVarUseFormData = false;
+                localVarRequestOptions = {
+                    method: 'GET',
+                    qs: localVarQueryParameters,
+                    headers: localVarHeaderParams,
+                    uri: localVarPath,
+                    useQuerystring: this._useQuerystring,
+                    json: true,
+                };
+                authenticationPromise = Promise.resolve();
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.apiKeyAuth.applyToRequest(localVarRequestOptions); });
+                authenticationPromise = authenticationPromise.then(function () { return _this.authentications.default.applyToRequest(localVarRequestOptions); });
+                return [2, authenticationPromise.then(function () {
+                        if (Object.keys(localVarFormParams).length) {
+                            if (localVarUseFormData) {
+                                localVarRequestOptions.formData = localVarFormParams;
+                            }
+                            else {
+                                localVarRequestOptions.form = localVarFormParams;
+                            }
+                        }
+                        return new Promise(function (resolve, reject) {
+                            localVarRequest(localVarRequestOptions, function (error, response, body) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                else {
+                                    body = models_1.ObjectSerializer.deserialize(body, "SettlementStatus");
+                                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                        resolve({ response: response, body: body });
+                                    }
+                                    else {
+                                        reject({ response: response, body: body });
+                                    }
+                                }
+                            });
+                        });
+                    })];
+            });
+        });
+    };
     SettlementManagementApi.prototype.getSettlements = function (transactionId, limit, start, options) {
         if (options === void 0) { options = { headers: {} }; }
         return __awaiter(this, void 0, void 0, function () {
