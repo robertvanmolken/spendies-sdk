@@ -17,6 +17,7 @@ import http = require('http');
 import { Settlement } from '../model/settlement';
 import { SettlementCreate } from '../model/settlementCreate';
 import { SettlementResult } from '../model/settlementResult';
+import { SettlementStatus } from '../model/settlementStatus';
 import { SettlementWithId } from '../model/settlementWithId';
 
 import { ObjectSerializer, Authentication, VoidAuth, OAuth } from '../model/models';
@@ -184,6 +185,64 @@ export class SettlementManagementApi {
                         reject(error);
                     } else {
                         body = ObjectSerializer.deserialize(body, "Settlement");
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject({ response: response, body: body });
+                        }
+                    }
+                });
+            });
+        });
+    }
+    /**
+     * Retrieve the status of a settlement.
+     * @summary Provides retrieval capability for returning settlement status.
+     * @param settlementId The settlement request ID
+     */
+    public async getSettlementStatus (settlementId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: SettlementStatus;  }> {
+        const localVarPath = this.basePath + '/settlements/{settlementId}/status'
+            .replace('{' + 'settlementId' + '}', encodeURIComponent(String(settlementId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'settlementId' is not null or undefined
+        if (settlementId === null || settlementId === undefined) {
+            throw new Error('Required parameter settlementId was null or undefined when calling getSettlementStatus.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        let authenticationPromise = Promise.resolve();
+        authenticationPromise = authenticationPromise.then(() => this.authentications.apiKeyAuth.applyToRequest(localVarRequestOptions));
+
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+        return authenticationPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.ClientResponse; body: SettlementStatus;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        body = ObjectSerializer.deserialize(body, "SettlementStatus");
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                             resolve({ response: response, body: body });
                         } else {
