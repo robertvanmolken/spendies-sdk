@@ -16,22 +16,10 @@ var SettlementStatus = (function () {
         {
             "name": "status",
             "baseName": "status",
-            "type": "SettlementStatus.StatusEnum"
+            "type": "StatusEnum"
         }
     ];
     return SettlementStatus;
 }());
-exports.SettlementStatus = SettlementStatus;
-(function (SettlementStatus) {
-    var StatusEnum;
-    (function (StatusEnum) {
-        StatusEnum[StatusEnum["Open"] = 'open'] = "Open";
-        StatusEnum[StatusEnum["Pending"] = 'pending'] = "Pending";
-        StatusEnum[StatusEnum["Cancelled"] = 'cancelled'] = "Cancelled";
-        StatusEnum[StatusEnum["Completed"] = 'completed'] = "Completed";
-        StatusEnum[StatusEnum["Expired"] = 'expired'] = "Expired";
-        StatusEnum[StatusEnum["Refunded"] = 'refunded'] = "Refunded";
-    })(StatusEnum = SettlementStatus.StatusEnum || (SettlementStatus.StatusEnum = {}));
-})(SettlementStatus = exports.SettlementStatus || (exports.SettlementStatus = {}));
 exports.SettlementStatus = SettlementStatus;
 //# sourceMappingURL=settlementStatus.js.map

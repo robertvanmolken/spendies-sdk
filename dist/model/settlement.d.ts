@@ -1,7 +1,8 @@
+import { StatusEnum } from './statusEnum';
 export declare class Settlement {
     'method': Settlement.MethodEnum;
     'dateInitiated': Date;
-    'status': Settlement.StatusEnum;
+    'status': StatusEnum;
     'issuer': string;
     'currency': string;
     'amount': number;
@@ -22,13 +23,5 @@ export declare namespace Settlement {
     enum MethodEnum {
         Ideal,
         Crypto
-    }
-    enum StatusEnum {
-        Open,
-        Pending,
-        Cancelled,
-        Completed,
-        Expired,
-        Refunded
     }
 }

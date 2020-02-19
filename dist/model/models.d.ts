@@ -17,6 +17,7 @@ export * from './settlementWithId';
 export * from './settlementWithIdAllOf';
 export * from './settlerRecipient';
 export * from './signature';
+export * from './statusEnum';
 export * from './tokenPayload';
 export * from './tokenRequest';
 export * from './transaction';

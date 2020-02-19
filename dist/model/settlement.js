@@ -21,7 +21,7 @@ var Settlement = (function () {
         {
             "name": "status",
             "baseName": "status",
-            "type": "Settlement.StatusEnum"
+            "type": "StatusEnum"
         },
         {
             "name": "issuer",
@@ -53,15 +53,6 @@ exports.Settlement = Settlement;
         MethodEnum[MethodEnum["Ideal"] = 'ideal'] = "Ideal";
         MethodEnum[MethodEnum["Crypto"] = 'crypto'] = "Crypto";
     })(MethodEnum = Settlement.MethodEnum || (Settlement.MethodEnum = {}));
-    var StatusEnum;
-    (function (StatusEnum) {
-        StatusEnum[StatusEnum["Open"] = 'open'] = "Open";
-        StatusEnum[StatusEnum["Pending"] = 'pending'] = "Pending";
-        StatusEnum[StatusEnum["Cancelled"] = 'cancelled'] = "Cancelled";
-        StatusEnum[StatusEnum["Completed"] = 'completed'] = "Completed";
-        StatusEnum[StatusEnum["Expired"] = 'expired'] = "Expired";
-        StatusEnum[StatusEnum["Refunded"] = 'refunded'] = "Refunded";
-    })(StatusEnum = Settlement.StatusEnum || (Settlement.StatusEnum = {}));
 })(Settlement = exports.Settlement || (exports.Settlement = {}));
 exports.Settlement = Settlement;
 //# sourceMappingURL=settlement.js.map

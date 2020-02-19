@@ -1,7 +1,9 @@
 import { SettlerRecipient } from './settlerRecipient';
+import { StatusEnum } from './statusEnum';
 export declare class Transaction {
     'method': Transaction.MethodEnum;
     'dateInitiated': Date;
+    'status': StatusEnum;
     'reasonForTransaction': string;
     'targetCurrency': string;
     'targetAmount': number;

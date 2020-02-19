@@ -1,6 +1,7 @@
+import { StatusEnum } from './statusEnum';
 export declare class SettlementStatus {
     'settlementId': string;
-    'status': SettlementStatus.StatusEnum;
+    'status': StatusEnum;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -12,14 +13,4 @@ export declare class SettlementStatus {
         baseName: string;
         type: string;
     }[];
-}
-export declare namespace SettlementStatus {
-    enum StatusEnum {
-        Open,
-        Pending,
-        Cancelled,
-        Completed,
-        Expired,
-        Refunded
-    }
 }

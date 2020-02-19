@@ -22,6 +22,7 @@ __export(require("./settlementWithId"));
 __export(require("./settlementWithIdAllOf"));
 __export(require("./settlerRecipient"));
 __export(require("./signature"));
+__export(require("./statusEnum"));
 __export(require("./tokenPayload"));
 __export(require("./tokenRequest"));
 __export(require("./transaction"));
@@ -51,6 +52,7 @@ var settlementWithId_1 = require("./settlementWithId");
 var settlementWithIdAllOf_1 = require("./settlementWithIdAllOf");
 var settlerRecipient_1 = require("./settlerRecipient");
 var signature_1 = require("./signature");
+var statusEnum_1 = require("./statusEnum");
 var tokenPayload_1 = require("./tokenPayload");
 var tokenRequest_1 = require("./tokenRequest");
 var transaction_1 = require("./transaction");
@@ -75,11 +77,9 @@ var enumsMap = {
     "AccountInfo.AuthLevelEnum": accountInfo_1.AccountInfo.AuthLevelEnum,
     "BankCheck.MethodEnum": bankCheck_1.BankCheck.MethodEnum,
     "Settlement.MethodEnum": settlement_1.Settlement.MethodEnum,
-    "Settlement.StatusEnum": settlement_1.Settlement.StatusEnum,
     "SettlementCreate.MethodEnum": settlementCreate_1.SettlementCreate.MethodEnum,
-    "SettlementStatus.StatusEnum": settlementStatus_1.SettlementStatus.StatusEnum,
     "SettlementWithId.MethodEnum": settlementWithId_1.SettlementWithId.MethodEnum,
-    "SettlementWithId.StatusEnum": settlementWithId_1.SettlementWithId.StatusEnum,
+    "StatusEnum": statusEnum_1.StatusEnum,
     "Transaction.MethodEnum": transaction_1.Transaction.MethodEnum,
     "TransactionWithId.MethodEnum": transactionWithId_1.TransactionWithId.MethodEnum,
 };

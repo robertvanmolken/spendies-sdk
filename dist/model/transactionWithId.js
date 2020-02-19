@@ -24,6 +24,11 @@ var TransactionWithId = (function () {
             "type": "Date"
         },
         {
+            "name": "status",
+            "baseName": "status",
+            "type": "StatusEnum"
+        },
+        {
             "name": "reasonForTransaction",
             "baseName": "reasonForTransaction",
             "type": "string"
