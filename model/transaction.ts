@@ -11,6 +11,7 @@
  */
 
 import { SettlerRecipient } from './settlerRecipient';
+import { StatusEnum } from './statusEnum';
 
 export class Transaction {
     /**
@@ -21,6 +22,7 @@ export class Transaction {
     * Initiated date of transaction
     */
     'dateInitiated': Date;
+    'status': StatusEnum;
     /**
     * Reason for transaction request
     */
@@ -66,6 +68,11 @@ export class Transaction {
             "name": "dateInitiated",
             "baseName": "dateInitiated",
             "type": "Date"
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "StatusEnum"
         },
         {
             "name": "reasonForTransaction",

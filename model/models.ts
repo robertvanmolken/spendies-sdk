@@ -17,6 +17,7 @@ export * from './settlementWithId';
 export * from './settlementWithIdAllOf';
 export * from './settlerRecipient';
 export * from './signature';
+export * from './statusEnum';
 export * from './tokenPayload';
 export * from './tokenRequest';
 export * from './transaction';
@@ -49,6 +50,7 @@ import { SettlementWithId } from './settlementWithId';
 import { SettlementWithIdAllOf } from './settlementWithIdAllOf';
 import { SettlerRecipient } from './settlerRecipient';
 import { Signature } from './signature';
+import { StatusEnum } from './statusEnum';
 import { TokenPayload } from './tokenPayload';
 import { TokenRequest } from './tokenRequest';
 import { Transaction } from './transaction';
@@ -76,11 +78,9 @@ let enumsMap: {[index: string]: any} = {
         "AccountInfo.AuthLevelEnum": AccountInfo.AuthLevelEnum,
         "BankCheck.MethodEnum": BankCheck.MethodEnum,
         "Settlement.MethodEnum": Settlement.MethodEnum,
-        "Settlement.StatusEnum": Settlement.StatusEnum,
         "SettlementCreate.MethodEnum": SettlementCreate.MethodEnum,
-        "SettlementStatus.StatusEnum": SettlementStatus.StatusEnum,
         "SettlementWithId.MethodEnum": SettlementWithId.MethodEnum,
-        "SettlementWithId.StatusEnum": SettlementWithId.StatusEnum,
+        "StatusEnum": StatusEnum,
         "Transaction.MethodEnum": Transaction.MethodEnum,
         "TransactionWithId.MethodEnum": TransactionWithId.MethodEnum,
 }

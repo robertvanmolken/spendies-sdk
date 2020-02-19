@@ -10,16 +10,14 @@
  * Do not edit the class manually.
  */
 
+import { StatusEnum } from './statusEnum';
 
 export class SettlementStatus {
     /**
     * ID of Settlement
     */
     'settlementId': string;
-    /**
-    * Status of settlement
-    */
-    'status': SettlementStatus.StatusEnum;
+    'status': StatusEnum;
 
     static discriminator: string | undefined = undefined;
 
@@ -32,7 +30,7 @@ export class SettlementStatus {
         {
             "name": "status",
             "baseName": "status",
-            "type": "SettlementStatus.StatusEnum"
+            "type": "StatusEnum"
         }    ];
 
     static getAttributeTypeMap() {
@@ -40,13 +38,3 @@ export class SettlementStatus {
     }
 }
 
-export namespace SettlementStatus {
-    export enum StatusEnum {
-        Open = <any> 'open',
-        Pending = <any> 'pending',
-        Cancelled = <any> 'cancelled',
-        Completed = <any> 'completed',
-        Expired = <any> 'expired',
-        Refunded = <any> 'refunded'
-    }
-}

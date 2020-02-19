@@ -12,6 +12,7 @@
 
 import { Settlement } from './settlement';
 import { SettlementWithIdAllOf } from './settlementWithIdAllOf';
+import { StatusEnum } from './statusEnum';
 
 export class SettlementWithId {
     /**
@@ -26,10 +27,7 @@ export class SettlementWithId {
     * Initiated date of settlement
     */
     'dateInitiated': Date;
-    /**
-    * Status of settlement
-    */
-    'status': SettlementWithId.StatusEnum;
+    'status': StatusEnum;
     /**
     * Settle transaction through issuer
     */
@@ -68,7 +66,7 @@ export class SettlementWithId {
         {
             "name": "status",
             "baseName": "status",
-            "type": "SettlementWithId.StatusEnum"
+            "type": "StatusEnum"
         },
         {
             "name": "issuer",
@@ -100,13 +98,5 @@ export namespace SettlementWithId {
     export enum MethodEnum {
         Ideal = <any> 'ideal',
         Crypto = <any> 'crypto'
-    }
-    export enum StatusEnum {
-        Open = <any> 'open',
-        Pending = <any> 'pending',
-        Cancelled = <any> 'cancelled',
-        Completed = <any> 'completed',
-        Expired = <any> 'expired',
-        Refunded = <any> 'refunded'
     }
 }

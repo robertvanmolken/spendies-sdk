@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { StatusEnum } from './statusEnum';
 
 export class Settlement {
     /**
@@ -20,10 +21,7 @@ export class Settlement {
     * Initiated date of settlement
     */
     'dateInitiated': Date;
-    /**
-    * Status of settlement
-    */
-    'status': Settlement.StatusEnum;
+    'status': StatusEnum;
     /**
     * Settle transaction through issuer
     */
@@ -57,7 +55,7 @@ export class Settlement {
         {
             "name": "status",
             "baseName": "status",
-            "type": "Settlement.StatusEnum"
+            "type": "StatusEnum"
         },
         {
             "name": "issuer",
@@ -89,13 +87,5 @@ export namespace Settlement {
     export enum MethodEnum {
         Ideal = <any> 'ideal',
         Crypto = <any> 'crypto'
-    }
-    export enum StatusEnum {
-        Open = <any> 'open',
-        Pending = <any> 'pending',
-        Cancelled = <any> 'cancelled',
-        Completed = <any> 'completed',
-        Expired = <any> 'expired',
-        Refunded = <any> 'refunded'
     }
 }
